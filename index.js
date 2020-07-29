@@ -15,6 +15,7 @@ async function handleRequest(request) {
     r.get('/code/.*', handleCodeRequest);
     r.get('/risk/.*', handleRiskRequest);
     r.get('/status/.*', handleStatusRequest)
+    r.get('/statistics/.*', handleStatisticsRequest);
 
     const resp = await r.route(request)
     return resp
@@ -92,3 +93,57 @@ async function handleStatusRequest(request) {
 
     }
 }
+
+// START STATISTICS
+
+async function handleStatisticsRequest(request) {
+  const countryCode = request.url.substring(request.url.lastIndexOf('/') + 1);
+  const slug = await findCovid197ApiSlug(countryCode);
+
+  const fields = ['confirmed', 'deaths', 'recovered'];
+  const answer = {};
+
+  for (let field of fields) {
+    answer[`${field}Delta`] = await fetchDeltaCases(slug, field);
+  }
+  return new Response(JSON.stringify(answer), {status: 200});
+}
+
+async function findCovid197ApiSlug (countryCode) {
+  const response = await fetch("https://api.covid19api.com/countries");
+  const countries = await response.json();
+
+  for (let country of countries) {
+    if (country["ISO2"] == countryCode) {
+       return country.Slug;
+    }
+  }  
+
+  return "france";
+}
+
+async function fetchDeltaCases (slug, field) {
+  const start = dateToString(getTwoWeeksAgo()); // "2020-06-01T00:00:00Z"
+  const end = dateToString(new Date()); // "2020-06-15T00:00:00Z"
+
+  const response = await fetch(`https://api.covid19api.com/country/${slug}/status/${field}?from=${start}&to=${end}`);
+  const records = await response.json();
+
+  const previous = records[0].Cases;
+  const current = records[records.length - 1].Cases;
+
+  return current - previous;
+}
+
+function getTwoWeeksAgo () {
+  const now = new Date();
+  now.setDate(now.getDate() - 14);
+  return now;
+}
+
+function dateToString (date) {
+  const iso = date.toISOString();
+  return `${iso.substring(0, iso.indexOf("T"))}T00:00:00Z`;
+}
+
+// END STATISTICS
