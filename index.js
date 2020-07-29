@@ -81,9 +81,9 @@ async function handleStatusRequest(request) {
   var keys = ""
   
   body[0]["indicators"].forEach(function(indicator){
-      
-        res[indicator["indicator_name"]] = {"value": indicator["value"], "comment" : indicator["comment"] }
-        keys += indicator["indicator_name"] + "<br>";
+        const indicatorName = getIndicatorName(indicator["indicator_name"]);
+        res[indicatorName] = {"value": indicator["value"], "comment" : indicator["comment"] }
+        keys += `${indicatorName}<br>`;
 })
     if (countryCode == "help"){
   return new Response("<html>"+ keys+'</html>', {status: 200,     headers: { "Content-Type": "text/html" },})
@@ -92,6 +92,10 @@ async function handleStatusRequest(request) {
           return new Response(JSON.stringify(res), {status: 200})
 
     }
+}
+
+function getIndicatorName (humanReadableName) {
+  return humanReadableName.split(' ').join("").split('?').join("");
 }
 
 // START STATISTICS
