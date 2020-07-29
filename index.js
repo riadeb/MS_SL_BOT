@@ -24,7 +24,7 @@ async function handleRequest(request) {
 async function handleCodeRequest(request) {
 
 
-  const countryName = request.url.substring(url.lastIndexOf('/') + 1);
+  const countryName = request.url.substring(request.url.lastIndexOf('/') + 1);
 
   const response = await fetch(`https://restcountries.eu/rest/v2/name/${countryName}`);
   const body = await response.json();
