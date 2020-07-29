@@ -112,7 +112,7 @@ async function handleStatusRequest(request) {
 }
 
 function getIndicatorName (humanReadableName) {
-  return humanReadableName.replace(new RegExp('[ |?|,|"|\\(|\\)|”|“|\\.|é|-]', 'g'), '');
+  return humanReadableName.replace(new RegExp('[ |?|,|"|\\(|\\)|”|“|\\.|é|-|/]', 'g'), '');
 }
 
 // START STATISTICS
