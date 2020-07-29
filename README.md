@@ -19,6 +19,6 @@ We build the bot using the graphical programming interface provided by the Bot F
 
 We collect the data from differente sources. The main ones are:
 
-- [Re-open EU](reopen.europa.eu): this website provides informations about borders, documents and restrictions;
-- [COVID19 API](covid19api.com): from here we collect and compare the number of cases of infections;
+- [Re-open EU](https://reopen.europa.eu): this website provides informations about borders, documents and restrictions;
+- [COVID19 API](https://covid19api.com): from here we collect and compare the number of cases of infections;
 - [Travel Advisory](https://www.travel-advisory.info/data-api): to provide a score of danger of the destination country.
