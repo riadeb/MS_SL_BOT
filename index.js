@@ -22,7 +22,9 @@ async function handleRequest(request) {
 }
 
 async function handleCodeRequest(request) {
-  const countryName = request.url.substring(request.url.lastIndexOf('/') + 1);
+
+
+  const countryName = request.url.substring(url.lastIndexOf('/') + 1);
 
   const response = await fetch(`https://restcountries.eu/rest/v2/name/${countryName}`);
   const body = await response.json();
@@ -63,8 +65,17 @@ async function handleRiskRequest(request) {
 }
 
 async function handleStatusRequest(request) {
-    
-    const countryCode = request.url.substring(request.url.lastIndexOf('/') + 1);
+
+    var maxlen = -1;
+    var url = request.url;
+    if (url.lastIndexOf('?maxlength=')!= -1){
+        maxlen = parseInt(url.substring(url.lastIndexOf('=') + 1));
+        console.log(maxlen);
+        console.log(url.substring(url.lastIndexOf('=') + 1))
+        url = url.substring(0,request.url.lastIndexOf('?maxlength='));
+    }
+
+    const countryCode = url.substring(url.lastIndexOf('/') + 1);
     const indicators_ids = "/2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,3001,3002,3003,3004,3005,3006,3007,3008,3009,3010,4001,4002,4003,4004,4005,4006,4007,4008,4009,4010";
   
     var response;
@@ -82,7 +93,13 @@ async function handleStatusRequest(request) {
   
   body[0]["indicators"].forEach(function(indicator){
         const indicatorName = getIndicatorName(indicator["indicator_name"]);
-        res[indicatorName] = {"value": indicator["value"], "comment" : indicator["comment"] }
+        var comment = indicator["comment"];
+        if (maxlen != -1){
+            maxlen = parseInt(maxlen);
+            comment = comment.substr(0,maxlen);
+            comment += "...";
+        }
+        res[indicatorName] = {"value": indicator["value"], "comment" : comment }
         keys += `${indicatorName}<br>`;
 })
     if (countryCode == "help"){
