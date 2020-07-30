@@ -2,6 +2,13 @@
 
 Here you can find the Bot Framework Composer project folder create during the Hackathon, and also the source code for the web service used by the bot itself to gather real data.
 
+## Where can I try it?
+
+We've deployed our bot to Microsoft Teams, and you can find it here:
+
+[![Bot on Teams](https://lh3.googleusercontent.com/jKU64njy8urP89V1O63eJxMtvWjDGETPlHVIhDv9WZAYzsSxRWyWZkUlBJZj_HbkHA=s180)](https://teams.microsoft.com/l/chat/0/0?users=28:f3defb1e-38a1-4cec-b937-92d1c6d6bb8d)
+
+
 ## What does this bot do?
 
 This bot helps its users to plan travels across Europe during the COVID19. Specifically, it checks if borders are open, if you need to wear masks or adopt a specific security behaviour in your destination country.
