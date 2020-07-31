@@ -1,6 +1,0 @@
-name = "router"
-type = "webpack"
-account_id = "961b42373810f5dd5f0703453aa5b402"
-workers_dev = true
-route = ""
-zone_id = ""
