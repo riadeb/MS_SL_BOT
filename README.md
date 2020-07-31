@@ -1,6 +1,6 @@
 # Microsoft Silver Lining Chatbot Challenge
 
-Here you can find the Bot Framework Composer project folder create during the Hackathon, and also the source code for the web service used by the bot itself to gather real data.
+Here you can find the Bot Framework Composer project folder created during the Hackathon, and also the source code for the web service used by the bot itself to gather real data.
 
 ## Where can I try it?
 
